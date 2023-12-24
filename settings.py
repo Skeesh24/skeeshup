@@ -28,23 +28,16 @@ class Configuration:
         """
         Loads the .json configuration file into a dictionary
         """
-        self.conf = {}
-        self.conf = self.conf_update(path)
+        self.conf = self.read(path)
 
     def read(self, path: str) -> Dict[str, str]:
         """
-        Reads a .json configuration file and returnes a new cofiguration
+        Reads a .json configuration file and returnes a new dictionary
         """
         try:
             return load(open(path))
         except Exception as e:
             raise e
-
-    def conf_update(self, path: str) -> None:
-        """
-        UPdated a conf field loading .json configuration forced
-        """
-        self.conf = self.read(path)
 
     def __getitem__(self, key: str):
         """
@@ -63,7 +56,7 @@ def build_environment() -> None:
 
 def build_logging() -> None:
     global logger
-    logger = getLogger(__name__)
+    logger = getLogger(env.PACKAGE)
     log = conf["LOG"]
     logger.setLevel(log["LEVEL"])
     basicConfig(format=log["FORMAT"])
