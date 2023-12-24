@@ -29,16 +29,22 @@ class Configuration:
         Loads the .json configuration file into a dictionary
         """
         self.conf = {}
-        self.conf = self.read(path)
-    
+        self.conf = self.conf_update(path)
+
     def read(self, path: str) -> Dict[str, str]:
+        """
+        Reads a .json configuration file and returnes a new cofiguration
+        """
         try:
-            if self.conf != {}:
-                return self.conf
-            else:
-                return load(open(path))
+            return load(open(path))
         except Exception as e:
             raise e
+
+    def conf_update(self, path: str) -> None:
+        """
+        UPdated a conf field loading .json configuration forced
+        """
+        self.conf = self.read(path)
 
     def __getitem__(self, key: str):
         """
