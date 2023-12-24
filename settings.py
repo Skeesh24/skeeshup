@@ -1,11 +1,13 @@
-import asyncio
-from logging import DEBUG, basicConfig, getLogger
+from logging import basicConfig, getLogger
 from os import environ
+from typing import Dict
 
 from dotenv import dotenv_values, load_dotenv
 
 
 class Settings:
+    dotenv: Dict[str, str]
+
     def __init__(self) -> None:
         """
         Downloads the .env file into the dotenv field as a dictionary
@@ -18,7 +20,7 @@ class Settings:
         """
         load_dotenv()
 
-    def __getattribute__(self, key: str) -> str:
+    def __getitem__(self, key: str) -> str:
         """
         Returns a .env variable value or an empty string from a dotenv field
         """
@@ -31,20 +33,19 @@ class Settings:
         return environ.get(key, "")
 
 
-async def build_logging() -> None:
+def build_logging() -> None:
     global logger
     logger = getLogger(__name__)
-    logger.setLevel(env.LOG_LEVEL)
+    logger.setLevel(int(env["LOG_LEVEL"]))
     basicConfig(
-        format="%(levelname)s: %(message)s; %(name)s %(filename)s -> %(funcName)s(line %(lineno)d)]"
+        format="%(levelname)s: %(message)s; package: %(name)s, file: %(filename)s, method: %(funcName)s at line %(lineno)d"
     )
 
 
-async def configure() -> None:
+def configure() -> None:
     global env
     env = Settings()
-    await build_logging()
+    build_logging()
 
 
-if __name__ == "__main__":
-    asyncio.run(configure())
+configure()
