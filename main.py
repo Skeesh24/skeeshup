@@ -1,7 +1,8 @@
 import asyncio
 from subprocess import PIPE, Popen
 from typing import List
-from settings import logger, env
+
+from settings import env, logger
 
 
 async def powershell(filename: str, args: List[str]) -> Popen[str]:
@@ -44,17 +45,14 @@ async def script(filename: str, args: List[str]):
 
 
 async def main():
-    DOWNLOAD_PS1 = "cmds/download.ps1"
     DOWNLOAD_ARGS = [
         "https://download-new.utorrent.com/endpoint/bittorrent/os/windows/track/stable/",
         "C:/Users/Skeesh/Desktop/app.exe",
     ]
-
-    INSTALL_PS1 = "cmds/install.ps1"
     INSTALL_ARGS = ["C:/Users/Skeesh/Desktop/app.exe"]
 
-    await script(DOWNLOAD_PS1, DOWNLOAD_ARGS)
-    await script(INSTALL_PS1, INSTALL_ARGS)
+    await script(env["PS_DOWNLOAD"], DOWNLOAD_ARGS)
+    await script(env["PS_INSTALL"], INSTALL_ARGS)
 
 
 if __name__ == "__main__":
