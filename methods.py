@@ -15,11 +15,11 @@ async def powershell(filename: str, args: List[str]) -> Popen[str]:
     try:
         logger.debug("subprocess started from file " + filename)
         logger.debug("subprocess args: " + str(args))
-        config = conf["PS"]
+        ps = conf["PS"]
         return Popen(
-            [config["CMDLET"], config["MODE"], filename, *args],
+            [ps["CMDLET"], ps["MODE"], filename, *args],
             stdout=PIPE,
-            encoding=config["ENCODING"],
+            encoding=ps["ENCODING"],
         )
     except Exception as e:
         logger.error(str(e))

@@ -27,7 +27,7 @@ async def main_process(download_args_array: list, install_args_array: list) -> N
         await install_binary(install_args)
 
 
-async def main():
+async def main(): 
     logger.info("program started")
     download_args_array: list = conf["CONTENT"]["DOWNLOAD_ARGS_ARRAY"]
     install_args_array: list = conf["CONTENT"]["INSTALL_ARGS_ARRAY"]
