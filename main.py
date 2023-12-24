@@ -1,18 +1,18 @@
 import asyncio
 
 from methods import script
-from settings import env, logger, build_configuration
+from settings import logger, conf
 
 
 async def main():
     logger.info("program started")
     logger.debug("getting the configuration")
-    config = build_configuration()
-    logger.debug(config)
+    content = conf["CONTENT"]
+    ps = conf["PS"]
 
     try:
-        await script(env.PS_DIRECTORY + env.PS_DOWNLOAD_FILE, config['DOWNLOAD_ARGS'])
-        await script(env.PS_DIRECTORY + env.PS_INSTALL_FILE, config['INSTALL_ARGS'])
+        await script(ps["DIRECTORY"] + ps["DOWNLOAD_FILE"], content["DOWNLOAD_ARGS"])
+        await script(ps["DIRECTORY"] + ps["INSTALL_FILE"], content["INSTALL_ARGS"])
     except Exception as e:
         logger.error("there is an error in the program runtime :(" + str(e))
 
