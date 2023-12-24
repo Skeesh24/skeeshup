@@ -13,7 +13,7 @@ async def powershell(filename: str, args: List[str]) -> Popen[str]:
     """
 
     try:
-        logger.info("subprocess started with the file " + filename)
+        logger.debug("subprocess started from file " + filename)
         logger.debug("subprocess args: " + str(args))
         config = conf["PS"]
         return Popen(
