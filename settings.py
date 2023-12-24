@@ -1,3 +1,4 @@
+from json import load
 from logging import basicConfig, getLogger
 from os import environ
 from typing import Dict
@@ -39,6 +40,10 @@ def build_system_environment() -> None:
     Downloads the .env file into the environment variables list
     """
     load_dotenv()
+
+
+def build_configuration() -> None:
+    return load(env[''])
 
 
 def configure() -> None:
