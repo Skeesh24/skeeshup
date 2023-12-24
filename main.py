@@ -16,8 +16,11 @@ async def main():
         f"program's start arguments are {str(DOWNLOAD_ARGS)} {str(INSTALL_ARGS)}"
     )
 
-    await script(env["PS_DOWNLOAD_PATH"], DOWNLOAD_ARGS)
-    await script(env["PS_INSTALL_PATH"], INSTALL_ARGS)
+    try:
+        await script(env["PS_DOWNLOAD_PATH"], DOWNLOAD_ARGS)
+        await script(env["PS_INSTALL_PATH"], INSTALL_ARGS)
+    except Exception as e:
+        logger.error("there is an error in the program runtime :(" + str(e))
 
 
 if __name__ == "__main__":
