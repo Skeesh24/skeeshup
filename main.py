@@ -1,13 +1,7 @@
 import asyncio
-from logging import DEBUG, basicConfig, getLogger
 from subprocess import PIPE, Popen
 from typing import List
-
-logger = getLogger(__name__)
-logger.setLevel(DEBUG)
-basicConfig(
-    format="%(levelname)s: %(message)s; %(name)s %(filename)s -> %(funcName)s(line %(lineno)d)]"
-)
+from settings import logger, env
 
 
 async def powershell(filename: str, args: List[str]) -> Popen[str]:
