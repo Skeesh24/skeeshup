@@ -1,7 +1,7 @@
 from subprocess import PIPE, Popen
 from typing import List
 
-from settings import env, logger
+from settings import logger, conf
 
 
 async def powershell(filename: str, args: List[str]) -> Popen[str]:
@@ -15,10 +15,11 @@ async def powershell(filename: str, args: List[str]) -> Popen[str]:
     try:
         logger.info("subprocess started with the file " + filename)
         logger.debug("subprocess args: " + str(args))
+        config = conf["PS"]
         return Popen(
-            [env.PS_CMDLET, env.PS_MODE, filename, *args],
+            [config["CMDLET"], config["MODE"], filename, *args],
             stdout=PIPE,
-            encoding=env.PS_ENCODING,
+            encoding=config["ENCODING"],
         )
     except Exception as e:
         logger.error(str(e))
