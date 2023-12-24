@@ -11,8 +11,8 @@ async def main():
     logger.debug(config)
 
     try:
-        await script(env["PS_DIRECTORY"] + env["PS_DOWNLOAD_FILE"], config['DOWNLOAD_ARGS'])
-        await script(env["PS_DIRECTORY"] + env["PS_INSTALL_FILE"], config['INSTALL_ARGS'])
+        await script(env.PS_DIRECTORY + env.PS_DOWNLOAD_FILE, config['DOWNLOAD_ARGS'])
+        await script(env.PS_DIRECTORY + env.PS_INSTALL_FILE, config['INSTALL_ARGS'])
     except Exception as e:
         logger.error("there is an error in the program runtime :(" + str(e))
 
