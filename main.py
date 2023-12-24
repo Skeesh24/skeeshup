@@ -12,17 +12,14 @@ async def powershell(filename: str, args: List[str]) -> Popen[str]:
     :param filename: path to the source script
     :param args: list of the args to file invoke with
     """
-    ENCODING = "IBM866"
-    CMDLET = "powershell"
-    MODE = "-File"
 
     try:
         logger.info("subprocess started with the file " + filename)
         logger.debug("subprocess args: " + str(args))
         return Popen(
-            [CMDLET, MODE, filename, *args],
+            [env["PS_CMDLET"], env["PS_MODE"], filename, *args],
             stdout=PIPE,
-            encoding=ENCODING,
+            encoding=env["PS_ENCODING"],
         )
     except Exception as e:
         logger.error(str(e))
@@ -51,8 +48,8 @@ async def main():
     ]
     INSTALL_ARGS = ["C:/Users/Skeesh/Desktop/app.exe"]
 
-    await script(env["PS_DOWNLOAD"], DOWNLOAD_ARGS)
-    await script(env["PS_INSTALL"], INSTALL_ARGS)
+    await script(env["PS_DOWNLOAD_PATH"], DOWNLOAD_ARGS)
+    await script(env["PS_INSTALL_PATH"], INSTALL_ARGS)
 
 
 if __name__ == "__main__":
