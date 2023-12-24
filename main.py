@@ -1,24 +1,18 @@
 import asyncio
 
 from methods import script
-from settings import env, logger
+from settings import env, logger, build_configuration
 
 
 async def main():
-    DOWNLOAD_ARGS = [
-        "https://download-new.utorrent.com/endpoint/bittorrent/os/windows/track/stable/",
-        "C:/Users/Skeesh/Desktop/app.exe",
-    ]
-    INSTALL_ARGS = ["C:/Users/Skeesh/Desktop/app.exe"]
-
     logger.info("program started")
-    logger.debug(
-        f"program's start arguments are {str(DOWNLOAD_ARGS)} {str(INSTALL_ARGS)}"
-    )
+    logger.debug("getting the configuration")
+    config = build_configuration()
+    logger.debug(config)
 
     try:
-        await script(env["PS_DOWNLOAD_PATH"], DOWNLOAD_ARGS)
-        await script(env["PS_INSTALL_PATH"], INSTALL_ARGS)
+        await script(env["PS_DIRECTORY"] + env["PS_DOWNLOAD_FILE"], config['DOWNLOAD_ARGS'])
+        await script(env["PS_DIRECTORY"] + env["PS_INSTALL_FILE"], config['INSTALL_ARGS'])
     except Exception as e:
         logger.error("there is an error in the program runtime :(" + str(e))
 
