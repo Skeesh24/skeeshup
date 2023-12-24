@@ -3,17 +3,18 @@ from logging import basicConfig, getLogger
 from os import environ
 from typing import Dict
 
-from dotenv import dotenv_values, load_dotenv
+from dotenv import load_dotenv
 
 
-class Settings:
-    dotenv: Dict[str, str]
-
-    def __init__(self) -> None:
+class Env:
+    def __init__(self, path: str = "") -> None:
         """
-        Downloads the .env file into the dotenv field as a dictionary
+        Loads the .env file into the system environment variables list
         """
-        load_dotenv()
+        if path == "":
+            load_dotenv()
+        else:
+            load_dotenv(path)
 
     def __getattribute__(self, key: str) -> str:
         """
@@ -22,28 +23,54 @@ class Settings:
         return environ.get(key, "")
 
 
+class Configuration:
+    def __init__(self, path: str) -> None:
+        """
+        Loads the .json configuration file into a dictionary
+        """
+        self.conf = {}
+        self.conf = self.read(path)
+    
+    def read(self, path: str) -> Dict[str, str]:
+        try:
+            if self.conf != {}:
+                return self.conf
+            else:
+                return load(open(path))
+        except Exception as e:
+            raise e
+
+    def __getitem__(self, key: str):
+        """
+        Returns a value from a .json configuration file or raises an error
+        """
+        try:
+            return self.conf[key]
+        except KeyError:
+            raise KeyError("there is no key " + key)
+
+
+def build_environment() -> None:
+    global env
+    env = Env()
+
+
 def build_logging() -> None:
     global logger
     logger = getLogger(__name__)
-    logger.setLevel(int(env.LOG_LEVEL))
-    basicConfig(format=env.LOG_FORMAT)
+    log = conf["LOG"]
+    logger.setLevel(log["LEVEL"])
+    basicConfig(format=log["FORMAT"])
 
 
-def build_configuration(path: str = "") -> Dict[str, str]:
-    try:
-        logger.debug(
-            "loading confiration file at " + path
-            if path != ""
-            else env.CONFIGURATION_PATH
-        )
-        return load(open(env.CONFIGURATION_PATH)) if path == "" else load(open(path))
-    except Exception as e:
-        logger.error("error while loading configuration file: " + str(e))
+def build_configuration() -> None:
+    global conf
+    conf = Configuration(env.CONFIGURATION_PATH)
 
 
 def configure() -> None:
-    global env
-    env = Settings()
+    build_environment()
+    build_configuration()
     build_logging()
 
 
