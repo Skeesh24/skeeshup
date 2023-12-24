@@ -17,7 +17,7 @@
   },
 
   "LOG": {
-    "LEVEL": 20,
-    "FORMAT": "%(levelname)s: %(message)s; package: %(name)s, file: %(filename)s, method: %(funcName)s at line %(lineno)d"
+    "LEVEL": 10,
+    "FORMAT": "%(levelname)s: %(message)s; file: %(filename)s, method: %(funcName)s at line %(lineno)d"
   }
 }

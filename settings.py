@@ -46,8 +46,8 @@ class Configuration:
         """
         try:
             return self.conf[key]
-        except KeyError:
-            raise KeyError("there is no key " + key)
+        except KeyError as e:
+            raise e
 
 
 def build_environment() -> None:
