@@ -1,9 +1,26 @@
+from enum import StrEnum, auto
 from json import load
 from logging import basicConfig, getLogger
 from os import environ
-from typing import Dict
+from typing import Dict, List
 
 from dotenv import load_dotenv
+
+from remote import get_remote_configuration
+
+
+class Sync(StrEnum):
+    LOCAL = auto()
+    REMOTE = auto()
+
+    @classmethod
+    def _from(cls, input_str: str):
+        try:
+            return getattr(Sync, input_str)
+        except AttributeError:
+            raise AttributeError(
+                "Unsupported configuration type.\nSYNC value should be only either 'LOCAL' or 'REMOTE'"
+            )
 
 
 class Env:
@@ -28,7 +45,11 @@ class Configuration:
         """
         Loads the .json configuration file into a dictionary
         """
-        self.conf = self.read(path)
+        match Sync._from(env.SYNC):
+            case Sync.LOCAL:
+                return self.read(path)
+            case Sync.REMOTE:
+                return get_remote_configuration()
 
     def read(self, path: str) -> Dict[str, str]:
         """
