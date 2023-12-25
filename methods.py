@@ -1,7 +1,7 @@
 from subprocess import PIPE, Popen
 from typing import List
 
-from settings import logger, conf
+from settings import conf, logger
 
 
 async def powershell(filename: str, args: List[str]) -> Popen[str]:
@@ -39,3 +39,27 @@ async def script(filename: str, args: List[str]):
         process.wait()
     except Exception as e:
         logger.error(str(e))
+
+
+async def download_binary(download_args: list) -> None:
+    """
+    """
+    ps = conf["PS"]
+    logger.debug("downloading with the args: " + str(download_args))
+    await script(ps["DIRECTORY"] + ps["DOWNLOAD_FILE"], download_args)
+
+
+async def install_binary(args: str) -> None:
+    """
+    """
+    ps = conf["PS"]
+    logger.debug("installing with the args: " + str(args))
+    await script(ps["DIRECTORY"] + ps["INSTALL_FILE"], args)
+
+
+async def delete_binary(args: list) -> None:
+    """
+    """
+    ps = conf["PS"]
+    logger.debug("deletion with the args: " + str(args))
+    await script(ps["DIRECTORY"] + ps["DELETE_FILE"], args)
