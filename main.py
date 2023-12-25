@@ -1,6 +1,5 @@
 import asyncio
 
-from configuration import get_download_args
 from methods import cleanup_directory, download_binary, install_binary
 from path import get_dir_and_filename
 from settings import conf, env, logger
@@ -23,7 +22,7 @@ async def installation_process(download_args: list) -> None:
 async def main():
     logger.info("program started")
     logger.info("getting download configuration. type: " + env.SYNC)
-    args: list = get_download_args()
+    args: list = conf["CONTENT"]["DOWNLOAD_ARGS"]
 
     try:
         await installation_process(args)
