@@ -2,7 +2,8 @@ import asyncio
 
 from methods import cleanup_directory, download_binary, install_binary
 from path import get_dir_and_filename
-from settings import conf, logger
+from remote import get_remote_configuration
+from settings import conf, env, logger
 
 
 async def installation_process(download_list: list) -> None:
@@ -21,7 +22,16 @@ async def installation_process(download_list: list) -> None:
 
 async def main():
     logger.info("program started")
-    args: list = conf["CONTENT"]["DOWNLOAD_ARGS"]
+    args: list = (
+        conf["CONTENT"]["DOWNLOAD_ARGS"]
+        if env.STORAGE == "local"
+        else get_remote_configuration()["DOWNLOAD_ARGS"]
+        if env.STORAGE == "mongo"
+        else []
+    )
+
+    if args == []:
+        raise Exception("There is no configuration provided")
 
     try:
         await installation_process(args)
