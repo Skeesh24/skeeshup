@@ -33,7 +33,7 @@ async def script(filename: str, args: List[str]):
     :param args: list of the args to file invoke with
     """
     try:
-        logger.info("script started from file " + filename)
+        logger.debug("script started from file " + filename)
         logger.debug("script started with the args " + str(args))
         process = await powershell(filename=filename, args=args)
         process.wait()

@@ -50,21 +50,30 @@ class Configuration:
 
 
 def build_environment() -> None:
+    """
+    Loads the system environment variables list into the env variable
+    """
     global env
     env = Env()
 
 
+def build_configuration() -> None:
+    """
+    Loads the json configuration into the conf variable
+    """
+    global conf
+    conf = Configuration(env.CONFIGURATION_PATH)
+
+
 def build_logging() -> None:
+    """
+    Inits the logging module by the configuration-provided preferences
+    """
     global logger
     logger = getLogger(env.PACKAGE)
     log = conf["LOG"]
     logger.setLevel(log["LEVEL"])
     basicConfig(format=log["FORMAT"])
-
-
-def build_configuration() -> None:
-    global conf
-    conf = Configuration(env.CONFIGURATION_PATH)
 
 
 def configure() -> None:
