@@ -43,23 +43,30 @@ async def script(filename: str, args: List[str]):
 
 async def download_binary(download_args: list) -> None:
     """
+    Downloads binary file by the given args list
+    args[0]: anchor to the remote server to download binary from
+    args[1]: filename to save binary to
     """
     ps = conf["PS"]
     logger.debug("downloading with the args: " + str(download_args))
     await script(ps["DIRECTORY"] + ps["DOWNLOAD_FILE"], download_args)
 
 
-async def install_binary(args: str) -> None:
+async def install_binary(install_args: list) -> None:
     """
-    """
-    ps = conf["PS"]
-    logger.debug("installing with the args: " + str(args))
-    await script(ps["DIRECTORY"] + ps["INSTALL_FILE"], args)
-
-
-async def delete_binary(args: list) -> None:
-    """
+    Installs binary file by the given args list
+    args[0]: filename to install binary from
     """
     ps = conf["PS"]
-    logger.debug("deletion with the args: " + str(args))
-    await script(ps["DIRECTORY"] + ps["DELETE_FILE"], args)
+    logger.debug("installing with the args: " + str(install_args))
+    await script(ps["DIRECTORY"] + ps["INSTALL_FILE"], install_args)
+
+
+async def cleanup_directory(cleanup_args: list) -> None:
+    """
+    Cleans up directory containig binary files by the given args list
+    args[0]: path to remove directory from
+    """
+    ps = conf["PS"]
+    logger.debug("deletion with the args: " + str(cleanup_args))
+    await script(ps["DIRECTORY"] + ps["DELETE_FILE"], cleanup_args)
