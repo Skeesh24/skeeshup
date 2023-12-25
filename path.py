@@ -15,3 +15,8 @@ def get_temp_location() -> str:
 
 def rand_hash() -> str:
     return sha256(str(datetime.now()).encode()).hexdigest()
+
+
+def get_dir_and_filename() -> (str, str):
+    location = get_temp_location()
+    return location, location + f"{rand_hash()}.exe"

@@ -1,14 +1,13 @@
 import asyncio
 
 from methods import cleanup_directory, download_binary, install_binary
-from path import get_temp_location, rand_hash
+from path import get_dir_and_filename
 from settings import conf, logger
 
 
 async def installation_process(download_list: list) -> None:
     while len(download_list) != 0:
-        location = get_temp_location()
-        filename = location + f"{rand_hash()}.exe"
+        location, filename = get_dir_and_filename()
 
         logger.info("starting download")
         await download_binary([download_list.pop(), filename])
