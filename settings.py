@@ -2,11 +2,13 @@ from enum import StrEnum, auto
 from json import load
 from logging import basicConfig, getLogger
 from os import environ
-from typing import Dict, List
+from typing import Dict
+from urllib.parse import quote_plus
 
 from dotenv import load_dotenv
+from pymongo import MongoClient
 
-from remote import get_remote_configuration
+from remote import get_mongo_collection
 
 
 class Sync(StrEnum):
@@ -45,13 +47,14 @@ class Configuration:
         """
         Loads the .json configuration file into a dictionary
         """
+
         match Sync._from(env.SYNC):
             case Sync.LOCAL:
-                return self.read(path)
+                self.conf = self.get_local_configuration(path)
             case Sync.REMOTE:
-                return get_remote_configuration()
+                self.conf = self.get_remote_configuration()
 
-    def read(self, path: str) -> Dict[str, str]:
+    def get_local_configuration(self, path: str) -> Dict[str, str]:
         """
         Reads a .json configuration file and returnes a new dictionary
         """
@@ -59,6 +62,19 @@ class Configuration:
             return load(open(path))
         except Exception as e:
             raise e
+
+    def get_remote_configuration(self) -> Dict:
+        collection = get_mongo_collection(
+            env.MONGO_USER,
+            env.MONGO_PASSWORD,
+            env.MONGO_HOST,
+            env.MONGO_DATABASE,
+            env.MONGO_COLLECTION,
+        )
+        conf = collection.find_one()
+        if conf is None or conf == {}:
+            raise FileNotFoundError("There is no remote configuration saved")
+        return conf
 
     def __getitem__(self, key: str):
         """
@@ -93,7 +109,7 @@ def build_logging() -> None:
     global logger
     logger = getLogger(env.PACKAGE)
     log = conf["LOG"]
-    logger.setLevel(log["LEVEL"])
+    logger.setLevel(int(log["LEVEL"]))
     basicConfig(format=log["FORMAT"])
 
 
