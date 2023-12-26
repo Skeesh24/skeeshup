@@ -3,10 +3,8 @@ from json import load
 from logging import basicConfig, getLogger
 from os import environ
 from typing import Dict
-from urllib.parse import quote_plus
 
 from dotenv import load_dotenv
-from pymongo import MongoClient
 
 from remote import get_mongo_collection
 
@@ -43,7 +41,7 @@ class Env:
 
 
 class Configuration:
-    def __init__(self, path: str) -> None:
+    def __init__(self, path: str, remote_params_list: list) -> None:
         """
         Loads the .json configuration file into a dictionary
         """
@@ -52,7 +50,7 @@ class Configuration:
             case Sync.LOCAL:
                 self.conf = self.get_local_configuration(path)
             case Sync.REMOTE:
-                self.conf = self.get_remote_configuration()
+                self.conf = self.get_remote_configuration(remote_params_list)
 
     def get_local_configuration(self, path: str) -> Dict[str, str]:
         """
@@ -63,14 +61,8 @@ class Configuration:
         except Exception as e:
             raise e
 
-    def get_remote_configuration(self) -> Dict:
-        collection = get_mongo_collection(
-            env.MONGO_USER,
-            env.MONGO_PASSWORD,
-            env.MONGO_HOST,
-            env.MONGO_DATABASE,
-            env.MONGO_COLLECTION,
-        )
+    def get_remote_configuration(self, remote_params_list: list) -> Dict:
+        collection = get_mongo_collection(*remote_params_list)
         conf = collection.find_one()
         if conf is None or conf == {}:
             raise FileNotFoundError("There is no remote configuration saved")
@@ -99,7 +91,16 @@ def build_configuration() -> None:
     Loads the json configuration into the conf variable
     """
     global conf
-    conf = Configuration(env.CONFIGURATION_PATH)
+    conf = Configuration(
+        path=env.CONFIGURATION_PATH,
+        remote_params_list=[
+            env.MONGO_USER,
+            env.MONGO_PASSWORD,
+            env.MONGO_HOST,
+            env.MONGO_DATABASE,
+            env.MONGO_COLLECTION,
+        ],
+    )
 
 
 def build_logging() -> None:
