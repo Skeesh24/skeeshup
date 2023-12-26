@@ -10,6 +10,9 @@ from remote import get_mongo_collection
 
 
 class Sync(StrEnum):
+    """
+    Represents an approach to application configuration
+    """
     LOCAL = auto()
     REMOTE = auto()
 
@@ -62,6 +65,9 @@ class Configuration:
             raise e
 
     def get_remote_configuration(self, remote_params_list: list) -> Dict:
+        """
+        Connects to the mongoDB configuration collection and returnes it as a new dictionary
+        """
         collection = get_mongo_collection(*remote_params_list)
         conf = collection.find_one()
         if conf is None or conf == {}:
@@ -115,6 +121,9 @@ def build_logging() -> None:
 
 
 def configure() -> None:
+    """
+    Configure the application by calling all the methods
+    """
     build_environment()
     build_configuration()
     build_logging()
