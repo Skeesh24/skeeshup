@@ -2,7 +2,7 @@ import asyncio
 
 from methods import cleanup_directory, download_binary, install_binary
 from path import get_dir_and_filename
-from settings import conf, env, logger
+from settings import conf, configure, env, logger
 
 
 async def installation_process(download_args: list) -> None:
