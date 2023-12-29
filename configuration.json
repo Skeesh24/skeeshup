@@ -10,7 +10,7 @@
     "CMDLET": "powershell",
     "MODE": "-File",
     "ENCODING": "IBM866",
-    "DIRECTORY": "./cmds/",
+    "DIRECTORY": "./src/cmds/",
     "DOWNLOAD_FILE": "download.ps1",
     "INSTALL_FILE": "install.ps1",
     "DELETE_FILE": "delete.ps1"

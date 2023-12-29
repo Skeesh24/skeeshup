@@ -44,14 +44,14 @@ class Env:
 
 
 class Configuration:
-    def __init__(self, path: str, remote_params_list: list) -> None:
+    def __init__(self, local_params_path: str, remote_params_list: list) -> None:
         """
         Loads the .json configuration file into a dictionary
         """
 
         match Sync._from(env.SYNC):
             case Sync.LOCAL:
-                self.conf = self.get_local_configuration(path)
+                self.conf = self.get_local_configuration(local_params_path)
             case Sync.REMOTE:
                 self.conf = self.get_remote_configuration(remote_params_list)
 
@@ -98,7 +98,7 @@ def build_configuration() -> None:
     """
     global conf
     conf = Configuration(
-        path=env.CONFIGURATION_PATH,
+        local_params_path=env.CONFIGURATION_PATH,
         remote_params_list=[
             env.MONGO_USER,
             env.MONGO_PASSWORD,
