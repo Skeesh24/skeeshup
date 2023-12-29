@@ -13,7 +13,7 @@ Tweaks and an important software by SKEESH.
 
 ### Installation
 
-    Clone the repository:
+Clone the repository:
 
 ```bash
 git clone https://github.com/skeesh24/skeeshup.git
@@ -42,22 +42,22 @@ Create an .env file to set the application configuration. You need to add the fo
 
 Method 1: Configuration JSON File
 
-    Navigate to the root directory.
-    Modify the configuration.json file according to your preferences. Ensure to fill in the required fields such as:
-        1. DOWNLOAD_ARGS [] - list of references to install
-    Save the changes.
+Navigate to the root directory.
+Modify the configuration.json file according to your preferences. Ensure to fill in the required fields such as:
+    1. DOWNLOAD_ARGS [] - list of references to install
+Save the changes.
 
 Method 2: MongoDB Document
 
-    Access your MongoDB instance.
-    Locate the relevant collection/document for configuration (e.g., config collection).
-    Update the necessary fields within the document to match your configuration requirements.
-    Save the changes.
+Access your MongoDB instance.
+Locate the relevant collection/document for configuration (e.g., config collection).
+Update the necessary fields within the document to match your configuration requirements.
+Save the changes.
 
 ## Running the Software
 
-    Navigate to the root directory. Execute the software:
+Navigate to the root directory. Execute the software:
 
-    ```bash
-    venv/Script/python src/main.py
-    ```
+```bash
+venv/Script/python src/main.py
+```
