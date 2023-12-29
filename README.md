@@ -9,25 +9,34 @@ Tweaks and an important software by SKEESH.
 
 ### Requirements
 
-    1. python3.11
+1. python3.11
 
 ### Installation
 
     Clone the repository:
 
-    ```bash
-    git clone https://github.com/skeesh24/skeeshup.git
-    ```
+```bash
+git clone https://github.com/skeesh24/skeeshup.git
+```
 
 ### Install dependencies:
 
-    ```bash
-    python3.11 -m venv venv && venv/Script/activate && pip install -r requirements.txt
-    ```
+```bash
+python3.11 -m venv venv && venv/Script/activate && pip install -r requirements.txt
+```
 
 ## Environment
 
-Create an .env file to set the application configuration. You need to add the following fields to it: 1. "CONFIGURATION_PATH" to specify the location of the configuration.json file 2. "PACKAGE" is used by the logger as the name of the main package 3. "SYNC" to select whether the configuration method is local (LOCAL) or cloud-based (REMOTE) 4. "TEMP_FOLDER" to specify the name of a folder in Local/Temp dir to store downloaded files 5. "MONGO_USER" secret data for accessing the mongodb instance (profile name) 6. "MONGO_HOST" secret data for accessing the mongodb instance (uri to locate db) 7. "MONGO_DATABASE" secret data to access the mongodb instance (database name) 8. "MONGO_COLLECTION" secret data to access the mongodb instance (collection name) 9. "MONGO_PASSWORD" secret data for accessing the mongodb instance (password to access db)
+Create an .env file to set the application configuration. You need to add the following fields to it:
+
+1. "CONFIGURATION_PATH" to specify the location of the configuration.json file
+2. "PACKAGE" is used by the logger as the name of the main package
+3. "SYNC" to select whether the configuration method is local (LOCAL) or cloud-based (REMOTE) 4. "TEMP_FOLDER" to specify the name of a folder in Local/Temp dir to store downloaded files
+4. "MONGO_USER" secret data for accessing the mongodb instance (profile name)
+5. "MONGO_HOST" secret data for accessing the mongodb instance (uri to locate db)
+6. "MONGO_DATABASE" secret data to access the mongodb instance (database name)
+7. "MONGO_COLLECTION" secret data to access the mongodb instance (collection name)
+8. "MONGO_PASSWORD" secret data for accessing the mongodb instance (password to access db)
 
 ## Configuration
 
