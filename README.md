@@ -2,8 +2,10 @@
 
 ## Overview
 
-There is an utility to quickly startup your desktop on windows 10.
-Tweaks and an important software by SKEESH.
+Utility to quickly startup your desktop on windows 10. 
+Software downloads and installs manually by the given references to download from.
+Software list by SKEESH.
+Built-in tweaks and other operating systems featured soon.
 
 ## Setup
 
@@ -44,7 +46,7 @@ Method 1: Configuration JSON File
 
 Navigate to the root directory.
 Modify the configuration.json file according to your preferences. Ensure to fill in the required fields such as:
-    1. DOWNLOAD_ARGS [] - list of references to install
+1. DOWNLOAD_ARGS [] - list of references to install
 Save the changes.
 
 Method 2: MongoDB Document
@@ -56,8 +58,9 @@ Save the changes.
 
 ## Running the Software
 
-Navigate to the root directory. Execute the software:
-
+1. Navigate to the root directory.
+2. Specify the references to download from. 
+3. Execute the software:
 ```bash
 venv/Script/python src/main.py
 ```
