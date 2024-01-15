@@ -1,0 +1,13 @@
+[pydeps]
+max_bacon = 3
+no_show = False
+verbose = 0
+pylib = False
+exclude =
+    os
+    re
+    sys
+    collections
+    __future__
+    venv
+    __pycache__
