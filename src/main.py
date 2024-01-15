@@ -1,7 +1,7 @@
 import asyncio
 
-from scripting import cleanup_directory, download_binary, install_binary
 from path import get_dir_and_filename
+from scripting import cleanup_directory, download_binary, install_binary
 from settings import conf, env, logger
 
 
@@ -16,7 +16,7 @@ async def installation_process(download_args: list) -> None:
             logger.info("starting instalation")
             await install_binary([filename])
     except (KeyboardInterrupt, SystemExit):
-        logger.error("Interrupted. Rolling back changes")
+        logger.error("interrupted,rolling back changes")
     finally:
         logger.info("starting cleanup temp directory")
         await cleanup_directory([location])
@@ -38,4 +38,4 @@ if __name__ == "__main__":
     try:
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
-        logger.info('Programm was interrupted.')
+        logger.info("programm was interrupted.")

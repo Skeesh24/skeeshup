@@ -71,7 +71,7 @@ class Configuration:
         collection = get_mongo_collection(*remote_params_list)
         conf = collection.find_one()
         if conf is None or conf == {}:
-            raise FileNotFoundError("There is no remote configuration saved")
+            raise FileNotFoundError("There is no saved remote configuration")
         return conf
 
     def __getitem__(self, key: str):
