@@ -75,6 +75,11 @@ async def remove_item(cleanup_args: list) -> None:
 
 
 async def unzip_archive(curdirabs: str, archive_name: str) -> None:
+    """
+    Unzips the archive in the current directory by the given archive name
+    args[0]: absolute path to the current direcotry
+    args[1]: the name of the file to save unzip from
+    """
     unzip_args = [
         find_winrar(),
         archive_name,

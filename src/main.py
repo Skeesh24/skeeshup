@@ -35,7 +35,7 @@ async def archive_process(archive_args: str) -> None:
     except (KeyboardInterrupt, SystemExit):
         logger.error("interrupted,  rolling back changes")
     finally:
-        logger.info("starting cleanup temp archive")
+        logger.info("starting cleanup an archive")
         await remove_item([archive_name])
 
 
