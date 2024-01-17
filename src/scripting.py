@@ -1,6 +1,9 @@
+from os import curdir
+from os.path import abspath
 from subprocess import PIPE, Popen
 from typing import List
 
+from path import find_winrar
 from settings import conf, logger
 
 
@@ -41,7 +44,7 @@ async def script(filename: str, args: List[str]):
         logger.error(str(e))
 
 
-async def download_binary(download_args: list) -> None:
+async def download_bytes(download_args: list) -> None:
     """
     Downloads binary file by the given args list
     args[0]: anchor to the remote server to download binary from
@@ -70,3 +73,15 @@ async def cleanup_directory(cleanup_args: list) -> None:
     ps = conf["PS"]
     logger.debug("deletion with the args: " + str(cleanup_args))
     await script(ps["DIRECTORY"] + ps["DELETE_FILE"], cleanup_args)
+
+
+async def unzip_archive() -> None:
+    winrar_args = [
+        find_winrar(),
+        abspath(curdir) + "\\skeeshup-archive.rar",
+        abspath(curdir),
+    ]
+
+    ps = conf["PS"]
+    logger.debug("unpacking an archive")
+    await script(ps["DIRECTORY"] + ps["UNPACK_FILE"], winrar_args)
