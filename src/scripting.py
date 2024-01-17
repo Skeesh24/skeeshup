@@ -26,7 +26,7 @@ async def powershell(filename: str, args: List[str]) -> Popen[str]:
         logger.error(str(e))
 
 
-async def script(filename: str, args: List[str]):
+async def script(filename: str, args: List[str], wait: bool = True):
     """
     Execute .ps1 script from the given filename and list of args. This method is blocking
 
@@ -37,7 +37,8 @@ async def script(filename: str, args: List[str]):
         logger.debug("script started from file " + filename)
         logger.debug("script started with the args " + str(args))
         process = await powershell(filename=filename, args=args)
-        process.wait()
+        if wait:
+            process.wait()
     except Exception as e:
         logger.error(str(e))
 
@@ -82,4 +83,4 @@ async def unzip_archive(curdirabs: str, archive_name: str) -> None:
 
     ps = conf["PS"]
     logger.debug("unpacking an archive")
-    await script(ps["DIRECTORY"] + ps["UNPACK_FILE"], unzip_args)
+    await script(ps["DIRECTORY"] + ps["UNPACK_FILE"], unzip_args, wait=False)
