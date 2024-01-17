@@ -64,7 +64,7 @@ async def install_binary(install_args: list) -> None:
     await script(ps["DIRECTORY"] + ps["INSTALL_FILE"], install_args)
 
 
-async def cleanup_directory(cleanup_args: list) -> None:
+async def remove_item(cleanup_args: list) -> None:
     """
     Cleans up directory containig binary files by the given args list
     args[0]: path to remove directory from

@@ -2,7 +2,7 @@ import asyncio
 from os.path import abspath, curdir
 
 from path import get_dir_and_filename
-from scripting import cleanup_directory, download_bytes, install_binary, unzip_archive
+from scripting import download_bytes, install_binary, remove_item, unzip_archive
 from settings import conf, env, logger
 
 
@@ -20,7 +20,7 @@ async def installation_process(download_args: list) -> None:
         logger.error("interrupted, rolling back changes")
     finally:
         logger.info("starting cleanup temp directory")
-        await cleanup_directory([location])
+        await remove_item([location])
 
 
 async def archive_process(archive_args: str) -> None:
@@ -28,9 +28,7 @@ async def archive_process(archive_args: str) -> None:
         logger.info("downloading archive from a cloud")
         curdirabs = abspath(curdir)
         archive_name = curdirabs + "\\skeeshup-archive.rar"
-        await download_bytes(
-            [archive_args, archive_name]
-        )
+        await download_bytes([archive_args, archive_name])
         logger.info("unziping archive")
         await unzip_archive(curdirabs, archive_name)
 
@@ -38,7 +36,7 @@ async def archive_process(archive_args: str) -> None:
         logger.error("interrupted,  rolling back changes")
     finally:
         logger.info("starting cleanup temp archive")
-        await cleanup_directory([archive_name])
+        await remove_item([archive_name])
 
 
 async def main():
