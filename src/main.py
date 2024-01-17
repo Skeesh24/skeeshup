@@ -26,16 +26,19 @@ async def installation_process(download_args: list) -> None:
 async def archive_process(archive_args: str) -> None:
     try:
         logger.info("downloading archive from a cloud")
+        curdirabs = abspath(curdir)
+        archive_name = curdirabs + "\\skeeshup-archive.rar"
         await download_bytes(
-            [archive_args, abspath(curdir) + "\\skeeshup-archive.rar"]
+            [archive_args, archive_name]
         )
-        logger.info("unzip archive")
-        await unzip_archive()
+        logger.info("unziping archive")
+        await unzip_archive(curdirabs, archive_name)
 
     except (KeyboardInterrupt, SystemExit):
         logger.error("interrupted,  rolling back changes")
     finally:
-        logger.info("starting cleanup temp directory")
+        logger.info("starting cleanup temp archive")
+        await cleanup_directory([archive_name])
 
 
 async def main():

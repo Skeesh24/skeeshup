@@ -1,5 +1,3 @@
-from os import curdir
-from os.path import abspath
 from subprocess import PIPE, Popen
 from typing import List
 
@@ -75,13 +73,13 @@ async def cleanup_directory(cleanup_args: list) -> None:
     await script(ps["DIRECTORY"] + ps["DELETE_FILE"], cleanup_args)
 
 
-async def unzip_archive() -> None:
-    winrar_args = [
+async def unzip_archive(curdirabs: str, archive_name: str) -> None:
+    unzip_args = [
         find_winrar(),
-        abspath(curdir) + "\\skeeshup-archive.rar",
-        abspath(curdir),
+        archive_name,
+        curdirabs,
     ]
 
     ps = conf["PS"]
     logger.debug("unpacking an archive")
-    await script(ps["DIRECTORY"] + ps["UNPACK_FILE"], winrar_args)
+    await script(ps["DIRECTORY"] + ps["UNPACK_FILE"], unzip_args)
