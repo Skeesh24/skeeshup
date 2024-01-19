@@ -89,3 +89,9 @@ async def unzip_archive(curdirabs: str, archive_name: str) -> None:
     ps = conf["PS"]
     logger.debug("unpacking an archive")
     await script(ps["DIRECTORY"] + ps["UNPACK_FILE"], unzip_args, wait=False)
+
+
+async def setup_cursors(cursors_setup_args: list):
+    ps = conf["PS"]
+    logger.debug("installing the cursors pack")
+    await script(ps["DIRECTORY"] + ps["INSTALL_CURSORS"], cursors_setup_args, wait=True)

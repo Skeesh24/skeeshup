@@ -1,23 +1,31 @@
 {
   "CONTENT": {
-    "DOWNLOAD_ARGS": [
-      "https://discord.com/api/downloads/distributions/app/installers/latest?channel=stable&platform=win&arch=x86",
+    "INSTALLATION_ARGS": [
+      "https://cdn.cloudflare.steamstatic.com/client/installer/SteamSetup.exe",
       "https://download-new.utorrent.com/endpoint/bittorrent/os/windows/track/stable/"
-    ]
+    ],
+    "ARCHIVE_LINK": "https://drive.usercontent.google.com/download?id=1e-b8N7LpaHopR39vmYQGxCn_xYz0Nzpt&export=download&authuser=0",
+    "ARCHIVE_NAME": "skeeshup-archive",
+    "CURSORS_FOLDERNAME": "CyberPunk Cursors",
+    "CURSORS_LOCATION": "C:/skeeshup/cursors",
+    "WALLPAPERS_LOCATION": "C:/skeeshup/wallpapers",
+    "NEXUS_LOCATION": "C:/skeeshup/nexus"
   },
 
   "PS": {
     "CMDLET": "powershell",
     "MODE": "-File",
     "ENCODING": "IBM866",
-    "DIRECTORY": "./src/cmds/",
+    "DIRECTORY": "./src/scripts/",
     "DOWNLOAD_FILE": "download.ps1",
     "INSTALL_FILE": "install.ps1",
-    "DELETE_FILE": "delete.ps1"
+    "DELETE_FILE": "delete.ps1",
+    "UNPACK_FILE": "unpack.ps1",
+    "INSTALL_CURSORS": "install_cursors.ps1"
   },
 
   "LOG": {
     "LEVEL": 20,
-    "FORMAT": "%(levelname)s: %(message)s; file: %(filename)s, method: %(funcName)s at line %(lineno)d"
+    "FORMAT": "%(levelname)s: %(message)s; method: %(funcName)s at line %(lineno)d"
   }
 }
